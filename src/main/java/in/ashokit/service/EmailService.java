@@ -1,0 +1,4 @@
+package in.ashokit.service;
+
+public class EmailService {
+}
