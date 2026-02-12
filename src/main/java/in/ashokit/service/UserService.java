@@ -1,5 +1,7 @@
 package in.ashokit.service;
 
+import in.ashokit.dto.ResetPwdDto;
+import in.ashokit.dto.ShippingAddressDto;
 import in.ashokit.dto.UserDto;
 
 public interface UserService {

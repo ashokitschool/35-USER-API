@@ -14,4 +14,6 @@ public class UserDto {
     private Long phno;
     private LocalDate createdDate;
     private LocalDate updatedDate;
+    private String pwdUpdated;
+    public String roleName;
 }

@@ -23,6 +23,7 @@ public class UserEntity {
     private String email;
     private String pwd;
     private Long phno;
+    private String pwdUpdated;
 
     @CreationTimestamp
     private LocalDate createdDate;
