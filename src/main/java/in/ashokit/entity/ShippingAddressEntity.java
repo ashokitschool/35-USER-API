@@ -18,7 +18,7 @@ public class ShippingAddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "addr_id")
-    private Long addrId;
+    private Integer addrId;
 
     @Column(name = "house_num", length = 100)
     private String houseNum;

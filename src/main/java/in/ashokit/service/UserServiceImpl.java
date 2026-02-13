@@ -72,7 +72,10 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findByEmailAndPwd(email, pwd);
 
         if (userEntity != null) {
-            return UserMapper.entityToDto(userEntity);
+            String roleName = userEntity.getRoles().stream().findFirst().map(RoleEntity::getName).orElse(null);
+            UserDto userDto = UserMapper.entityToDto(userEntity);
+            userDto.setRoleName(roleName);
+            return userDto;
         }
 
         return null;

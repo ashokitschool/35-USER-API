@@ -4,5 +4,5 @@ import in.ashokit.entity.ShippingAddressEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface ShippingAddressRepository extends JpaRepository<ShippingAddressEntity, Long> {
+public interface ShippingAddressRepository extends JpaRepository<ShippingAddressEntity, Integer> {
 }

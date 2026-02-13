@@ -29,8 +29,15 @@ public class UserRestController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<UserDto>> loginUser(@RequestBody UserDto userDto) {
-        UserDto loggedInUser = userService.login(userDto.getEmail(), userDto.getPwd());
+
         ApiResponse<UserDto> response = new ApiResponse<>();
+        UserDto loggedInUser = userService.login(userDto.getEmail(), userDto.getPwd());
+        if (loggedInUser == null) {
+            response.setStatusCode(HttpStatus.UNAUTHORIZED.value());
+            response.setMessage("Invalid email or password");
+            response.setData(null);
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+        }
         response.setStatusCode(HttpStatus.OK.value());
         response.setMessage("Login successful");
         response.setData(loggedInUser);
@@ -39,8 +46,16 @@ public class UserRestController {
 
     @PostMapping("/reset-password")
     public ResponseEntity<ApiResponse<String>> resetPassword(@RequestBody ResetPwdDto resetPwdDto) {
-        userService.resetPassword(resetPwdDto);
+        ResetPwdDto resetPwdDto1 = userService.resetPassword(resetPwdDto);
         ApiResponse<String> response = new ApiResponse<>();
+
+        if (resetPwdDto1 == null) {
+            response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+            response.setMessage("Check Your Email or Pwd and Try Again");
+            response.setData(null);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
         response.setStatusCode(HttpStatus.OK.value());
         response.setMessage("Password reset successfully");
         response.setData(null);
@@ -51,6 +66,14 @@ public class UserRestController {
     public ResponseEntity<ApiResponse<UserDto>> getUserByEmail(@RequestParam String email) {
         UserDto userDto = userService.getUserByEmail(email);
         ApiResponse<UserDto> response = new ApiResponse<>();
+
+        if(userDto == null) {
+            response.setStatusCode(HttpStatus.NOT_FOUND.value());
+            response.setMessage("User not found with email: " + email);
+            response.setData(null);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
         response.setStatusCode(HttpStatus.OK.value());
         response.setMessage("User retrieved successfully");
         response.setData(userDto);
@@ -76,5 +99,4 @@ public class UserRestController {
         response.setData(deletedAddress);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }
